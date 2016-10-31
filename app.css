@@ -1,0 +1,13 @@
+.field {
+	height: 10rem;
+	width: 10rem;
+
+}
+
+.x {
+	content: "X";
+}
+
+.o {
+	content: "O";
+}
