@@ -1,0 +1,39 @@
+body {
+	font-family: sans-serif;
+}
+
+.content-container {
+	margin: 0 auto;
+	width: 70vw;
+	text-align: center;
+}
+
+
+.game-container {
+	margin: 0 auto;
+	display: flex;                       /* establish flex container */
+	flex-wrap: wrap;                     /* enable flex items to wrap */
+	justify-content: space-around;
+	width: 32rem;
+  
+}
+
+.field {
+  flex: 0 0 32.5%;                       /* don't grow, don't shrink, width */
+  height: 10rem;
+  width: 10rem;
+  margin-bottom: 5px;
+  background-color: #999;
+
+}
+.cell:nth-child(3n) {
+  background-color: #F00;
+}
+
+div.x {
+	content: "X";
+}
+
+div.o {
+	content: "O";
+}

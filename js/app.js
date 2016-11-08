@@ -16,7 +16,7 @@ $( function() {
 	var gameOver = false;
 
 
-	$(".field").click() {
+	$("div.field").click( function() {
 
 		if (isEmpty(this)) {
 
@@ -28,34 +28,38 @@ $( function() {
 			}
 
 		}
-	}
+	});
 
 	function isEmpty(field) {
-		return !field.hasClass("filled");
+		return !$(field).hasClass("filled");
 	}
 
 	function fillField(field, currPlayer) {
 
 		if (currPlayer == "user") {
-			field.addClass(userChoice);
+			$(field).addClass(userChoice);
+			$(field).text(userChoice);
 		} else {
-			field.addClass(compChoice);
+			$(field).addClass(compChoice);
+			$(field).text(compChoice);
 		}
 		
-		field.addClass("filled");
+		$(field).addClass("filled");
 
 	}
 
 	function checkWin() {
 
 		for (var i = 0; i < winningCombinations.length; ++i) {
-			if (($(".game-container:nth-child(" + winningCombinations[0] + ")").hasClass(userChoice) && 
-				$(".game-container:nth-child(" + winningCombinations[1] + ")").hasClass(userChoice) && 
-				$(".game-container:nth-child(" + winningCombinations[2] + ")").hasClass(userChoice)) || 
-				($(".game-container:nth-child(" + winningCombinations[0] + ")").hasClass(compChoice) && 
-				$(".game-container:nth-child(" + winningCombinations[1] + ")").hasClass(compChoice) && 
-				$(".game-container:nth-child(" + winningCombinations[2] + ")").hasClass(compChoice))) {
 
+			if (($(".field:nth-child(" + winningCombinations[i][0] + ")").hasClass(userChoice) && 
+				$(".field:nth-child(" + winningCombinations[i][1] + ")").hasClass(userChoice) && 
+				$(".field:nth-child(" + winningCombinations[i][2] + ")").hasClass(userChoice)) || 
+				($(".field:nth-child(" + winningCombinations[i][0] + ")").hasClass(compChoice) && 
+				$(".field:nth-child(" + winningCombinations[i][1] + ")").hasClass(compChoice) && 
+				$(".field:nth-child(" + winningCombinations[i][2] + ")").hasClass(compChoice))) {
+
+				console.log("won game");
 				return true;
 			}
 		}
@@ -74,7 +78,8 @@ $( function() {
 	function winOrDraw() {
 		if (checkWin()) {
 			gameOver = true;
-			resetBoard();
+			
+			resetBoard(); // TODO: set delay
 			// WINNER CURRPLAYER
 			return true;
 
@@ -94,6 +99,7 @@ $( function() {
 
 	function resetBoard() {
 		$(".game-container > div").removeClass("filled");
+		$(".field").text("");
 		$(".game-container > div").removeClass(userChoice);
 		$(".game-container > div").removeClass(compChoice);
 	}
