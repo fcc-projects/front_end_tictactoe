@@ -2,6 +2,7 @@
 <html>
 	<head>
     	<link rel="stylesheet" href="css/app.css">
+    	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="js/app.js"></script>
@@ -10,9 +11,9 @@
 	<body>
 		<div class="content-container">
 			<div class="icon-select">
-				<span>Select which icon you want to play:</span>
-				<button class="x-icon">x</button>
-				<button class="o-icon">o</button>
+				<p>Select which icon you want to play:</p>
+				<input type="radio" value="x" name="icon-selection" id="x-button"><label for="x-button" class="x-icon">x</label>
+				<input type="radio" value="o" name="icon-selection" id="o-button"><label for="o-button" class="o-icon">o</label>
 			</div>
 			<div class="game-container">
 				<div class="field"></div>

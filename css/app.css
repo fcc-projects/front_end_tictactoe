@@ -1,5 +1,5 @@
 body {
-	font-family: sans-serif;
+	font-family: 'Roboto Slab', sans-serif;
 }
 
 .content-container {
@@ -10,7 +10,7 @@ body {
 
 
 .game-container {
-	margin: 0 auto;
+	margin: 15vh auto;
 	display: flex;                       /* establish flex container */
 	flex-wrap: wrap;                     /* enable flex items to wrap */
 	justify-content: space-around;
@@ -18,11 +18,61 @@ body {
   
 }
 
+input[type="radio"] {
+	display: none;
+}
+
+label {
+	border: none;
+	outline: none;
+	font-size: 2rem;
+	line-height: 2rem;
+	height: 2rem;
+	width: 2rem;
+	margin: 0 1vw;
+	font-family: 'Roboto Slab', sans-serif;
+	background-color: #fff;
+	cursor: pointer;
+	color: #aaa;
+}
+
+label.x-icon:hover {
+	/* color: #ff7780; */
+	color: #CC2B36;
+	opacity: 0.5;
+}
+
+label.o-icon:hover {
+	/* color: #4bfca1; */
+	color: #00964A;
+	opacity: 0.5;
+}
+
+input[type="radio"]:checked +label {
+	opacity: 1;
+	transition: opacity .2s ease-in;
+}
+
+input[type="radio"]:checked + label.x-icon {
+	color: #CC2B36;
+}
+
+input[type="radio"]:checked + label.o-icon {
+	color: #00964A;
+}
+
+input[type="radio"]:not(:checked):disabled + label:hover {
+	color: #aaa;
+	opacity: 1;
+}
+
 .field {
   flex: 0 0 32.5%;                       /* don't grow, don't shrink, width */
   height: 10rem;
   width: 10rem;
   margin-bottom: 5px;
+  font-size: 10rem;
+  line-height: 8rem;
   background-color: #999;
 
 }

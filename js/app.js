@@ -16,6 +16,19 @@ $( function() {
 	var gameOver = false;
 
 
+	$('input[type="radio"]').click( function() {
+		setSelection($(this).attr("value"));
+
+	});
+
+	function setSelection(selection) {
+		userChoice = selection;
+		compChoice = selection == "x" ? "o" : "x";
+
+		selectionMade = true;
+		$("input[name=icon-selection]").attr('disabled', true);
+	}
+
 	$("div.field").click( function() {
 
 		if (isEmpty(this)) {
