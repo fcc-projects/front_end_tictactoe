@@ -38,7 +38,7 @@ $( function() {
 			if (!winOrDraw()) {
 				togglePlayer();
 				compMakeMove();
-			}
+			} 
 
 		}
 	});
@@ -63,6 +63,7 @@ $( function() {
 
 	function checkWin() {
 
+		console.log("checkWin");
 		for (var i = 0; i < winningCombinations.length; ++i) {
 
 			if (($(".field:nth-child(" + winningCombinations[i][0] + ")").hasClass(userChoice) && 
@@ -77,6 +78,7 @@ $( function() {
 			}
 		}
 
+		console.log("not won");
 		return false;
 	}
 
@@ -89,39 +91,49 @@ $( function() {
 	}
 
 	function winOrDraw() {
+		console.log("winOrDraw")
 		if (checkWin()) {
-			gameOver = true;
-			
-			resetBoard(); // TODO: set delay
-			// WINNER CURRPLAYER
-			return true;
+
 
 		} else if (checkDraw()) {
 
-			gameOver = true;
-			resetBoard();
-				// DRAW POP UP
 
-			return true;
+		} else {
+
+
+			return false;
 		}
 
-		return false;
+		gameOver = true;
 
+		resetBoard();		
+		return true;
 	}
 
 
 	function resetBoard() {
-		$(".game-container > div").removeClass("filled");
-		$(".field").text("");
-		$(".game-container > div").removeClass(userChoice);
-		$(".game-container > div").removeClass(compChoice);
+
+		setTimeout( function() {
+			$(".game-container > div").removeClass("filled");
+			$(".field").text("");
+			$(".game-container > div").removeClass(userChoice);
+			$(".game-container > div").removeClass(compChoice);
+		}, 2000 );
 	}
 
 	function compMakeMove() {
-		// MINIMAX AI;
+		var emptySquares = $('.field').not('.filled');
+		var numEmpty = emptySquares.length;
+		var ranNum = Math.floor(Math.random() * (numEmpty - 1));
 
-		if (!winOrDraw()) {
-			togglePlayer();
-		}
+
+		setTimeout(function() {
+			fillField(emptySquares[ranNum], currPlayer);
+
+			if (!winOrDraw()) {
+				togglePlayer();
+			}
+		}, 1000);
+		
 	}
 });
