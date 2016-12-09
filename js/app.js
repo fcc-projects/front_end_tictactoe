@@ -12,7 +12,7 @@ $( function() {
 	var userChoice = "x";
 	var compChoice = "o";
 	var currPlayer = "user";
-	var seletionMade = false;
+	var selectionMade = false;
 	var gameOver = false;
 
 
@@ -29,17 +29,25 @@ $( function() {
 		$("input[name=icon-selection]").attr('disabled', true);
 	}
 
+	function resetSelection() {
+		selectionMade = false;
+		$("input[name=icon-selection]").attr('disabled', false);
+		$("input[name=icon-selection]").prop('checked', false);
+	}
+
+
 	$("div.field").click( function() {
 
-		if (isEmpty(this)) {
+		if (selectionMade &&
+			currPlayer == "user" && 
+			isEmpty(this)) {
 
 			fillField(this, currPlayer);
 
-			if (!winOrDraw()) {
-				togglePlayer();
-				compMakeMove();
-			} 
-
+		} else {
+			if (!selectionMade) {
+				alert("Please select your icon!");
+			}
 		}
 	});
 
@@ -47,9 +55,9 @@ $( function() {
 		return !$(field).hasClass("filled");
 	}
 
-	function fillField(field, currPlayer) {
+	function fillField(field, player) {
 
-		if (currPlayer == "user") {
+		if (player == "user") {
 			$(field).addClass(userChoice);
 			$(field).text(userChoice);
 		} else {
@@ -59,6 +67,15 @@ $( function() {
 		
 		$(field).addClass("filled");
 
+
+		if (!winOrDraw()) {
+			togglePlayer();
+
+			if (currPlayer == "computer") {
+				compMakeMove();
+			}
+			
+		} 
 	}
 
 	function checkWin() {
@@ -73,17 +90,31 @@ $( function() {
 				$(".field:nth-child(" + winningCombinations[i][1] + ")").hasClass(compChoice) && 
 				$(".field:nth-child(" + winningCombinations[i][2] + ")").hasClass(compChoice))) {
 
-				console.log("won game");
+
+				setTimeout( function() {
+					alert(currPlayer.charAt(0).toUpperCase() + currPlayer.slice(1) + " has won!");
+
+					resetBoard();
+				}, 200 );
+
 				return true;
 			}
 		}
 
-		console.log("not won");
 		return false;
 	}
 
 	function checkDraw() {
-		return ($(".filled").length == 9);
+		if ($(".filled").length == 9) {
+
+			setTimeout ( function() {
+				alert("It's a draw!");
+
+				resetBoard();
+			}, 200 );
+			
+			return true;
+		}
 	}
 
 	function togglePlayer() {
@@ -91,23 +122,14 @@ $( function() {
 	}
 
 	function winOrDraw() {
-		console.log("winOrDraw")
-		if (checkWin()) {
+		if (checkWin() || checkDraw()) {
 
-
-		} else if (checkDraw()) {
-
-
+			gameOver = true;
+	
+			return true;
 		} else {
-
-
 			return false;
 		}
-
-		gameOver = true;
-
-		resetBoard();		
-		return true;
 	}
 
 
@@ -118,7 +140,9 @@ $( function() {
 			$(".field").text("");
 			$(".game-container > div").removeClass(userChoice);
 			$(".game-container > div").removeClass(compChoice);
-		}, 2000 );
+		}, 100 );
+
+		resetSelection();
 	}
 
 	function compMakeMove() {
@@ -128,12 +152,8 @@ $( function() {
 
 
 		setTimeout(function() {
-			fillField(emptySquares[ranNum], currPlayer);
-
-			if (!winOrDraw()) {
-				togglePlayer();
-			}
-		}, 1000);
+			fillField(emptySquares[ranNum], "computer");
+		}, 200);
 		
 	}
 });
